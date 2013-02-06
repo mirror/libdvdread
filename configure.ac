@@ -68,17 +68,6 @@ AC_SUBST(DVDREAD_LT_AGE)
 AC_SUBST(DVDREAD_LT_REVISION)
 
 dnl --------------------------------------------------------------
-dnl Make possible to build for another arch.
-dnl --------------------------------------------------------------
-if test x$DVDREAD_BUILD != "x"; then
-  AC_MSG_RESULT(*** build forced to $DVDREAD_BUILD ***)
-  build=$DVDREAD_BUILD
-  host=$DVDREAD_BUILD
-else
-  check_athlon=yes
-fi
-
-dnl --------------------------------------------------------------
 dnl Checks for programs.
 dnl --------------------------------------------------------------
 dnl Save CFLAGS, AC_ISC_POSIX set some unwanted default CFLAGS
