@@ -197,21 +197,11 @@ dnl ---------------------------------------------
 AC_CHECK_PROG(DOXYGEN, doxygen, doxygen, no)
 
 dnl ---------------------------------------------
-dnl Some include paths ( !!! DO NOT REMOVE !!! )
-dnl ---------------------------------------------
-INCLUDES='-I$(top_srcdir) $(DVDREAD_CFLAGS)'
-AC_SUBST(INCLUDES)
-
-dnl ---------------------------------------------
 dnl Output configuration files
 dnl ---------------------------------------------
 AC_OUTPUT([
 Makefile
-src/Makefile
-misc/Makefile
 misc/dvdread-config
 misc/dvdread.pc
 misc/libdvdread.spec
-misc/relchk.sh
-m4/Makefile
 ])

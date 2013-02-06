@@ -1,42 +1,48 @@
-include $(top_srcdir)/misc/Makefile.common
+AM_CPPFLAGS = -I$(top_srcdir)/src
 
+EXTRA_DIST = \
+	README \
+	TODO \
+	msvc/
 
-SUBDIRS = src misc m4
+lib_LTLIBRARIES = libdvdread.la
 
-EXTRA_DIST = autogen.sh \
-	     AUTHORS \
-	     ChangeLog \
-	     configure \
-	     config.guess \
-	     config.sub \
-	     COPYING \
-	     INSTALL \
-	     install-sh \
-	     libtool \
-	     ltmain.sh \
-	     missing \
-	     mkinstalldirs \
-	     README \
-	     TODO
+libdvdread_la_SOURCES = \
+	src/bitreader.c \
+	src/bswap.h \
+	src/dvd_input.c \
+	src/dvd_input.h \
+	src/dvd_reader.c \
+	src/dvd_udf.c \
+	src/dvdread_internal.h \
+	src/ifo_print.c \
+	src/ifo_read.c \
+	src/md5.c \
+	src/md5.h \
+	src/nav_print.c \
+	src/nav_read.c
 
-MOSTLYCLEANFILES += $(PACKAGE)_$(VERSION).tar.gz \
-	$(distdir).tar.gz $(PACKAGE).tgz package_descriptions
+libdvdread_la_LIBADD = $(DYNAMIC_LD_LIBS) $(CSS_LIBS)
 
-MAINTAINERCLEANFILES += configure $(ACLOCAL_M4) config.h.in \
-	ltmain.sh config.guess config.sub install-sh missing \
-	mkinstalldirs
+libdvdread_la_LDFLAGS = -version-info $(DVDREAD_LT_CURRENT):$(DVDREAD_LT_REVISION):$(DVDREAD_LT_AGE) \
+	-export-symbols-regex "(^dvd.*|^nav.*|^ifo.*|^DVD.*|^UDF.*)"
 
-world:
-	@$(MAKE) clean all install 2> warnings.log
-	test -s warnings.log || rm warnings.log
+pkgincludedir = $(includedir)/dvdread
+pkginclude_HEADERS = \
+	src/dvdread/bitreader.h \
+	src/dvdread/dvd_reader.h \
+	src/dvdread/dvd_udf.h \
+	src/dvdread/ifo_print.h \
+	src/dvdread/ifo_read.h \
+	src/dvdread/ifo_types.h \
+	src/dvdread/nav_print.h \
+	src/dvdread/nav_read.h \
+	src/dvdread/nav_types.h
 
-prune-cache:
-	-rm -f config.cache
+bin_SCRIPTS = misc/dvdread-config
 
-release-check:
-	@./config.status misc/relchk.sh
-	@./autogen.sh noconfig && $(SHELL) misc/relchk.sh
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = misc/dvdread.pc
 
-dist-hook:
-	cp -r $(srcdir)/msvc $(distdir)/msvc
-	rm -rf `find $(distdir)/msvc -name CVS`
+m4datadir = $(datadir)/aclocal
+m4data_DATA = m4/dvdread.m4
