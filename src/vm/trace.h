@@ -19,10 +19,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef LIBDVDNAV_VMCMD_H
-#define LIBDVDNAV_VMCMD_H
+#ifndef LIBDVDNAV_TRACE_H
+#define LIBDVDNAV_TRACE_H
 
 void vm_print_mnemonic(vm_cmd_t *command);
 void vm_print_cmd(int row, vm_cmd_t *command);
 
-#endif /* LIBDVDNAV_VMCMD_H */
+/* for debugging: prints a link in readable form */
+void vm_print_link(link_t value);
+
+/* for debugging: dumps VM registers */
+void vm_print_registers( registers_t *registers );
+
+#endif /* LIBDVDNAV_TRACE_H */

@@ -53,6 +53,16 @@ AC_C_BIGENDIAN
 AS_CASE([$host],
   [*mingw32* | *cygwin*], [AC_CHECK_FUNCS(gettimeofday)])
 
+AC_ARG_ENABLE([debug],
+  AS_HELP_STRING([--enable-debug]. [Build with debug and trace support @<:@default=no@:>@]))
+
+AS_IF([test "x$enable_debug" != "xyes"], [
+  AC_DEFINE([NDEBUG], [1], [Disable debug and assert()])
+], [
+  AC_DEFINE([TRACE], [1], [Trace VM and other debug info])
+])
+AM_CONDITIONAL([DEBUG], [test "x$enable_debug" = "xyes"])
+
 AC_ARG_WITH([libdvdcss],
   AS_HELP_STRING([--with-libdvdcss], [Link directly against libdvdcss @<:@default=no@:>@]))
 

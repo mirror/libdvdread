@@ -58,6 +58,10 @@
 #include <fcntl.h>  /* O_BINARY  */
 #endif
 
+#ifdef TRACE
+#include "trace.h"
+#endif
+
 /*
 #define DVDNAV_STRICT
 */

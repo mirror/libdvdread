@@ -45,7 +45,6 @@
 #include "decoder.h"
 #include "dvdnav.h"
 #include "vm.h"
-#include "vmcmd.h"
 
 /* where should libdvdnav write its messages (stdout/stderr) */
 #define MSG_OUT stdout

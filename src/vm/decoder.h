@@ -98,12 +98,4 @@ int32_t vmEval_CMD(vm_cmd_t commands[], int32_t num_commands,
 /* extracts some bits from the command */
 uint32_t vm_getbits(command_t* command, int32_t start, int32_t count);
 
-#ifdef TRACE
-/* for debugging: prints a link in readable form */
-void vm_print_link(link_t value);
-
-/* for debugging: dumps VM registers */
-void vm_print_registers( registers_t *registers );
-#endif
-
 #endif /* LIBDVDNAV_DECODER_H */

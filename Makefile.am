@@ -33,9 +33,11 @@ libdvd5_la_SOURCES = \
 	src/vm/decoder.c \
 	src/vm/decoder.h \
 	src/vm/vm.c \
-	src/vm/vm.h \
-	src/vm/vmcmd.c \
-	src/vm/vmcmd.h
+	src/vm/vm.h
+
+if DEBUG
+libdvd5_la_SOURCES += src/vm/trace.c src/vm/trace.h
+endif
 
 libdvd5_la_LIBADD = $(CSS_LIBS)
 
