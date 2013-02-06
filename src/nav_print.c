@@ -26,9 +26,9 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-#include "dvdread/nav_types.h"
-#include "dvdread/nav_print.h"
-#include "dvdread/ifo_print.h"
+#include "dvd5/nav_types.h"
+#include "dvd5/nav_print.h"
+#include "dvd5/ifo_print.h"
 
 static void navPrint_PCI_GI(pci_gi_t *pci_gi) {
   int i;

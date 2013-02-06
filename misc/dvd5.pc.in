@@ -1,0 +1,13 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: libdvd5
+Description: Low level DVD access library with navigation
+Version: @VERSION@
+
+Requires.private: @CSS_REQUIRES@
+
+Cflags: -I${includedir} @THREAD_CFLAGS@
+Libs: -L${libdir} -ldvd5 @THREAD_LIB@

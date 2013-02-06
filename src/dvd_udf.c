@@ -38,8 +38,8 @@
 #include <inttypes.h>
 
 #include "dvdread_internal.h"
-#include "dvdread/dvd_reader.h"
-#include "dvdread/dvd_udf.h"
+#include "dvd5/dvd_reader.h"
+#include "dvd5/dvd_udf.h"
 
 /* It's required to either fail or deliver all the blocks asked for. */
 static int DVDReadLBUDF( dvd_reader_t *device, uint32_t lb_number,

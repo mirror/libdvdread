@@ -25,7 +25,7 @@
 #include <unistd.h>
 
 #include "config.h" /* Required for MingW */
-#include "dvdread/dvd_reader.h"
+#include "dvd5/dvd_reader.h"
 #include "dvd_input.h"
 
 

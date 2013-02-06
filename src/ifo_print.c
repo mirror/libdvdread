@@ -24,9 +24,9 @@
 #include <ctype.h>
 #include <assert.h>
 
-#include "dvdread/ifo_types.h"
-#include "dvdread/ifo_read.h"
-#include "dvdread/ifo_print.h"
+#include "dvd5/ifo_types.h"
+#include "dvd5/ifo_read.h"
+#include "dvd5/ifo_print.h"
 
 /* Put this in some other file / package?  It's used in nav_print too. */
 static void ifo_print_time(int level, dvd_time_t *dtime) {

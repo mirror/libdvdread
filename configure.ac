@@ -1,41 +1,22 @@
 AC_PREREQ([2.53])
 
-dnl --------------------------------------------------------------
-dnl Making releases: dvdread_sub += 1; change DVDREAD_LT_* accordingly
-dnl
-dnl These are defined in m4 so they can be passed to AC_INIT
-dnl --------------------------------------------------------------
-m4_define([dvdread_major], [4])
-m4_define([dvdread_minor], [2])
-m4_define([dvdread_sub],   [0])
-m4_define([dvdread_pre],   [])
-
-AC_INIT([libdvdread], [dvdread_major.dvdread_minor.dvdread_sub[]dvdread_pre])
-AC_CONFIG_SRCDIR([src/dvdread/dvd_reader.h])
+AC_INIT([dvd5], [5])
+AC_CONFIG_SRCDIR([src/ifo_read.c])
 AM_INIT_AUTOMAKE([1.6 foreign])
 
 dnl create a config.h file (Automake will add -DHAVE_CONFIG_H)
 AC_CONFIG_HEADERS([config.h])
 AC_CANONICAL_HOST
 
-DVDREAD_MAJOR="dvdread_major"
-DVDREAD_MINOR="dvdread_minor"
-DVDREAD_SUB="dvdread_sub"
-DVDREAD_PRE="dvdread_pre"
-
-AC_SUBST(DVDREAD_MAJOR)
-AC_SUBST(DVDREAD_MINOR)
-AC_SUBST(DVDREAD_SUB)
-
-dnl The libtool version numbers (DVDREAD_LT_*); Don't even think about faking this!
+dnl The libtool version numbers (DVD5_LT_*); Don't even think about faking this!
 dnl
 dnl immediately before every release do:
 dnl ===================================
 dnl if (the interface is totally unchanged from previous release)
-dnl    DVDREAD_LT_REVISION ++;
+dnl    DVD5_LT_REVISION ++;
 dnl else { /* interfaces have been added, removed or changed */
-dnl    DVDREAD_LT_REVISION = 0;
-dnl    DVDREAD_LT_CURRENT ++;
+dnl    DVD5_LT_REVISION = 0;
+dnl    DVD5_LT_CURRENT ++;
 dnl    if (any interfaces have been _added_ since last release)
 dnl       AGE ++;
 dnl    if (any interfaces have been _removed_ or _incompatibly changed_)
@@ -43,22 +24,22 @@ dnl       AGE = 0;
 dnl }
 dnl
 dnl If you want to know more about what you are doing, here are some details:
-dnl  * DVDREAD_LT_CURRENT is the current API version
-dnl  * DVDREAD_LT_REVISION is an internal revision number which is increased when the API
+dnl  * DVD5_LT_CURRENT is the current API version
+dnl  * DVD5_LT_REVISION is an internal revision number which is increased when the API
 dnl    itself did not change
-dnl  * DVDREAD_LT_AGE is the number of previous API versions still supported by this library
+dnl  * DVD5_LT_AGE is the number of previous API versions still supported by this library
 dnl  * libtool has its own numbering scheme, because local library numbering schemes
 dnl    are platform dependent
 dnl  * in Linux, the library will be named
-dnl    libname.so.(DVDREAD_LT_CURRENT - DVDREAD_LT_AGE).DVDREAD_LT_AGE.DVDREAD_LT_REVISION
+dnl    libname.so.(DVD5_LT_CURRENT - DVD5_LT_AGE).DVD5_LT_AGE.DVD5_LT_REVISION
 
-DVDREAD_LT_CURRENT=5
-DVDREAD_LT_AGE=1
-DVDREAD_LT_REVISION=2
+DVD5_LT_CURRENT=0
+DVD5_LT_AGE=0
+DVD5_LT_REVISION=0
 
-AC_SUBST(DVDREAD_LT_CURRENT)
-AC_SUBST(DVDREAD_LT_AGE)
-AC_SUBST(DVDREAD_LT_REVISION)
+AC_SUBST(DVD5_LT_CURRENT)
+AC_SUBST(DVD5_LT_AGE)
+AC_SUBST(DVD5_LT_REVISION)
 
 AC_PROG_CC
 
@@ -97,6 +78,27 @@ AS_IF([test x"$with_libdvdcss" = "xyes"], [
 ])
 AC_SUBST([CSS_REQUIRES])
 
+
+dnl ---------------------------------------------
+dnl threads
+dnl ---------------------------------------------
+case $host in
+  *-*-freebsd*)
+    THREAD_LIBS="-L/usr/local/lib -pthread"
+    THREAD_CFLAGS="-I/usr/local/include -D_THREAD_SAFE"
+    CFLAGS="$THREAD_CFLAGS $CFLAGS"
+    ;;
+  *mingw32* | *cygwin*)
+    ;;
+  *)
+    AC_CHECK_LIB(pthread, pthread_create,
+	[THREAD_LIBS="-lpthread"],
+	AC_MSG_ERROR(pthread needed))
+    ;;
+esac
+AC_SUBST(THREAD_LIBS)
+AC_SUBST(THREAD_CFLAGS)
+
 dnl ---------------------------------------------
 dnl Check for doxygen (dynamic documentation generator)
 dnl ---------------------------------------------
@@ -107,6 +109,5 @@ dnl Output configuration files
 dnl ---------------------------------------------
 AC_OUTPUT([
 Makefile
-misc/dvdread.pc
-misc/libdvdread.spec
+misc/dvd5.pc
 ])
