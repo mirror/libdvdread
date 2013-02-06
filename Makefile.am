@@ -1,4 +1,4 @@
-AM_CPPFLAGS = -I$(top_srcdir)/src
+AM_CPPFLAGS = -I$(top_srcdir)/src $(CSS_CFLAGS)
 
 EXTRA_DIST = \
 	README \
@@ -22,7 +22,7 @@ libdvdread_la_SOURCES = \
 	src/nav_print.c \
 	src/nav_read.c
 
-libdvdread_la_LIBADD = $(DYNAMIC_LD_LIBS) $(CSS_LIBS)
+libdvdread_la_LIBADD = $(CSS_LIBS)
 
 libdvdread_la_LDFLAGS = -version-info $(DVDREAD_LT_CURRENT):$(DVDREAD_LT_REVISION):$(DVDREAD_LT_AGE) \
 	-export-symbols-regex "(^dvd.*|^nav.*|^ifo.*|^DVD.*|^UDF.*)"
