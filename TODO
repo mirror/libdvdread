@@ -10,4 +10,3 @@
    3 - fully respect user prohibitions
 * cleanup public API and fix libtool versioning
 * Update decoder.c with some of the more rare commands. Update already done to vmcmd.c
-* Replace the auto* build system with a custom and clean one based on ffmpeg's (mostly done)
