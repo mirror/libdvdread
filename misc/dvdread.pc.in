@@ -7,5 +7,7 @@ Name: libdvdread
 Description: Low level DVD access library
 Version: @VERSION@
 
+Requires.private: @CSS_REQUIRES@
+
 Cflags: -I${includedir}
-Libs: -L${libdir} -ldvdread @CSS_LIBS@
+Libs: -L${libdir} -ldvdread
