@@ -116,7 +116,6 @@ void  vm_free_vm(vm_t *vm);
 
 /* IFO access */
 ifo_handle_t *vm_get_vmgi(vm_t *vm);
-ifo_handle_t *vm_get_vtsi(vm_t *vm);
 
 /* Reader Access */
 dvd_reader_t *vm_get_dvd_reader(vm_t *vm);
@@ -136,7 +135,6 @@ void vm_position_get(vm_t *vm, vm_position_t *position);
 void vm_get_next_cell(vm_t *vm);
 
 /* Jumping - all these return 1, if a hop has been performed */
-int vm_jump_pg(vm_t *vm, int pg);
 int vm_jump_cell_block(vm_t *vm, int cell, int block);
 int vm_jump_title_part(vm_t *vm, int title, int part);
 int vm_jump_title_program(vm_t *vm, int title, int pgcn, int pgn);
@@ -164,7 +162,6 @@ void vm_get_subp_info(vm_t *vm, int *current, int *num_avail);
 void vm_get_video_res(vm_t *vm, int *width, int *height);
 int  vm_get_video_aspect(vm_t *vm);
 int  vm_get_video_scale_permission(vm_t *vm);
-video_attr_t vm_get_video_attr(vm_t *vm);
 audio_attr_t vm_get_audio_attr(vm_t *vm, int streamN);
 subp_attr_t  vm_get_subp_attr(vm_t *vm, int streamN);
 ifo_handle_t *vm_get_title_ifo(vm_t *vm, uint32_t title);

@@ -104,6 +104,9 @@ static pgcit_t* get_PGCIT(vm_t *vm);
 /* Helper functions */
 static void vm_close(vm_t *vm);
 
+static video_attr_t vm_get_video_attr(vm_t *vm);
+static ifo_handle_t *vm_get_vtsi(vm_t *vm);
+
 #ifdef TRACE
 static void vm_print_current_domain_state(vm_t *vm) {
   switch((vm->state).domain) {
@@ -301,7 +304,7 @@ ifo_handle_t *vm_get_vmgi(vm_t *vm) {
   return vm->vmgi;
 }
 
-ifo_handle_t *vm_get_vtsi(vm_t *vm) {
+static ifo_handle_t *vm_get_vtsi(vm_t *vm) {
   return vm->vtsi;
 }
 
@@ -547,7 +550,7 @@ void vm_get_next_cell(vm_t *vm) {
 
 /* Jumping */
 
-int vm_jump_pg(vm_t *vm, int pg) {
+static int vm_jump_pg(vm_t *vm, int pg) {
   (vm->state).pgN = pg;
   process_command(vm, play_PG(vm));
   return 1;
@@ -964,7 +967,7 @@ int vm_get_video_scale_permission(vm_t *vm) {
   return vm_get_video_attr(vm).permitted_df;
 }
 
-video_attr_t vm_get_video_attr(vm_t *vm) {
+static video_attr_t vm_get_video_attr(vm_t *vm) {
   switch ((vm->state).domain) {
   case VTS_DOMAIN:
     return vm->vtsi->vtsi_mat->vts_video_attr;
