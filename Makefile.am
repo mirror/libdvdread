@@ -1,9 +1,8 @@
 AM_CPPFLAGS = -I$(top_srcdir)/src $(CSS_CFLAGS)
 
-EXTRA_DIST = \
-	README \
-	TODO \
-	msvc/
+dist_doc_DATA = AUTHORS ChangeLog COPYING README TODO
+
+EXTRA_DIST = msvc/
 
 lib_LTLIBRARIES = libdvdread.la
 
