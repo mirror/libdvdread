@@ -201,7 +201,6 @@ dnl Output configuration files
 dnl ---------------------------------------------
 AC_OUTPUT([
 Makefile
-misc/dvdread-config
 misc/dvdread.pc
 misc/libdvdread.spec
 ])
