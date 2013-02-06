@@ -39,10 +39,5 @@ pkginclude_HEADERS = \
 	src/dvdread/nav_read.h \
 	src/dvdread/nav_types.h
 
-bin_SCRIPTS = misc/dvdread-config
-
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = misc/dvdread.pc
-
-m4datadir = $(datadir)/aclocal
-m4data_DATA = m4/dvdread.m4
