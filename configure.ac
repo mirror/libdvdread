@@ -1,31 +1,18 @@
-AC_PREREQ([2.53])
+AC_INIT(libdvdread, 4.2.0)
+AC_CONFIG_SRCDIR([src/dvd_reader.c])
 
-dnl --------------------------------------------------------------
-dnl Making releases: dvdread_sub += 1; change DVDREAD_LT_* accordingly
-dnl
-dnl These are defined in m4 so they can be passed to AC_INIT
-dnl --------------------------------------------------------------
-m4_define([dvdread_major], [4])
-m4_define([dvdread_minor], [2])
-m4_define([dvdread_sub],   [0])
-m4_define([dvdread_pre],   [])
-
-AC_INIT([libdvdread], [dvdread_major.dvdread_minor.dvdread_sub[]dvdread_pre])
-AC_CONFIG_SRCDIR([src/dvdread/dvd_reader.h])
-AM_INIT_AUTOMAKE([1.6 foreign])
-
-dnl create a config.h file (Automake will add -DHAVE_CONFIG_H)
-AC_CONFIG_HEADERS([config.h])
+AC_PREREQ(2.53)
 AC_CANONICAL_HOST
 
-DVDREAD_MAJOR="dvdread_major"
-DVDREAD_MINOR="dvdread_minor"
-DVDREAD_SUB="dvdread_sub"
-DVDREAD_PRE="dvdread_pre"
+AM_INIT_AUTOMAKE([foreign dist-bzip2 no-dist-gzip subdir-objects])
+AM_MAINTAINER_MODE([enable])
+dnl Enable silent rules only when available (automake 1.11 or later).
+m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
-AC_SUBST(DVDREAD_MAJOR)
-AC_SUBST(DVDREAD_MINOR)
-AC_SUBST(DVDREAD_SUB)
+LT_INIT
+
+AC_CONFIG_HEADER(config.h)
+AC_CONFIG_MACRO_DIR([m4])
 
 dnl The libtool version numbers (DVDREAD_LT_*); Don't even think about faking this!
 dnl
@@ -56,13 +43,9 @@ DVDREAD_LT_CURRENT=5
 DVDREAD_LT_AGE=1
 DVDREAD_LT_REVISION=2
 
-AC_SUBST(DVDREAD_LT_CURRENT)
-AC_SUBST(DVDREAD_LT_AGE)
-AC_SUBST(DVDREAD_LT_REVISION)
+AC_SUBST([DVDREAD_LTVERSION], [$DVDREAD_LT_CURRENT:$DVDREAD_LT_AGE:$DVDREAD_LT_REVISION])
 
 AC_PROG_CC
-
-LT_INIT
 
 AC_CHECK_HEADERS_ONCE([sys/param.h limits.h dlfcn.h])
 
@@ -97,16 +80,27 @@ AS_IF([test x"$with_libdvdcss" = "xyes"], [
 ])
 AC_SUBST([CSS_REQUIRES])
 
-dnl ---------------------------------------------
-dnl Check for doxygen (dynamic documentation generator)
-dnl ---------------------------------------------
-AC_CHECK_PROG(DOXYGEN, doxygen, doxygen, no)
+CC_CHECK_CFLAGS_APPEND([-Wall -Wsign-compare])
+
+
+AC_ARG_ENABLE([doc],
+  AS_HELP_STRING([--disable-apidoc], [Disable building (with Doxygen) and intalling API documentation @<:@default=auto@:@>]))
+
+AC_PATH_PROG([DOXYGEN], [doxygen])
+
+AS_IF([test "x$DOXYGEN" = "x"], [
+  AS_IF([test "x$enable_apidoc" = "xyes"], [
+    AC_MSG_ERROR([You need Doxygen to build API documentation])
+  ])
+])
+AM_CONDITIONAL([APIDOC], [test "x$DOXYGEN" != "x"])
 
 dnl ---------------------------------------------
 dnl Output configuration files
 dnl ---------------------------------------------
 AC_OUTPUT([
 Makefile
+doc/doxygen.cfg
 misc/dvdread.pc
 misc/libdvdread.spec
 ])

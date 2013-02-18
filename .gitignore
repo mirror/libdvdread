@@ -3,6 +3,7 @@
 *.o
 *~
 .deps/
+.dirstamp
 .libs/
 /aclocal.m4
 /autom4te.cache/
@@ -17,9 +18,15 @@
 /install-sh
 /libtool
 /ltmain.sh
+/m4/libtool.m4
+/m4/lt*.m4
 /misc/*.pc
 /misc/libdvdread.spec
 /missing
 /stamp-h1
+ChangeLog
 Makefile
 Makefile.in
+doc/doxygen.cfg
+doc/html
+stamp-*
