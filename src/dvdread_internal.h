@@ -38,4 +38,8 @@
 int UDFReadBlocksRaw(dvd_reader_t *device, uint32_t lb_number,
                      size_t block_count, unsigned char *data, int encrypted);
 
+void *GetUDFCacheHandle(dvd_reader_t *device);
+void SetUDFCacheHandle(dvd_reader_t *device, void *cache);
+void FreeUDFCache(void *cache);
+
 #endif /* LIBDVDREAD_DVDREAD_INTERNAL_H */
