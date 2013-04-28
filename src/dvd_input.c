@@ -58,19 +58,19 @@ char *      (*dvdinput_error) (dvd_input_t);
 #endif
 #endif
 
-typedef struct dvdcss_s *dvdcss_handle;
-static dvdcss_handle (*DVDcss_open)  (const char *);
-static int           (*DVDcss_close) (dvdcss_handle);
-static int           (*DVDcss_seek)  (dvdcss_handle, int, int);
-static int           (*DVDcss_title) (dvdcss_handle, int);
-static int           (*DVDcss_read)  (dvdcss_handle, void *, int, int);
-static char *        (*DVDcss_error) (dvdcss_handle);
+typedef struct dvdcss_s *dvdcss_t;
+static dvdcss_t (*DVDcss_open)  (const char *);
+static int      (*DVDcss_close) (dvdcss_t);
+static int      (*DVDcss_seek)  (dvdcss_t, int, int);
+static int      (*DVDcss_title) (dvdcss_t, int);
+static int      (*DVDcss_read)  (dvdcss_t, void *, int, int);
+static char *   (*DVDcss_error) (dvdcss_t);
 #endif
 
 /* The DVDinput handle, add stuff here for new input methods. */
 struct dvd_input_s {
   /* libdvdcss handle */
-  dvdcss_handle dvdcss;
+  dvdcss_t dvdcss;
 
   /* dummy file input */
   int fd;
@@ -302,17 +302,17 @@ int dvdinput_setup(void)
 #else
 #define U_S
 #endif
-    DVDcss_open = (dvdcss_handle (*)(const char*))
+    DVDcss_open = (dvdcss_t (*)(const char*))
       dlsym(dvdcss_library, U_S "dvdcss_open");
-    DVDcss_close = (int (*)(dvdcss_handle))
+    DVDcss_close = (int (*)(dvdcss_t))
       dlsym(dvdcss_library, U_S "dvdcss_close");
-    DVDcss_title = (int (*)(dvdcss_handle, int))
+    DVDcss_title = (int (*)(dvdcss_t, int))
       dlsym(dvdcss_library, U_S "dvdcss_title");
-    DVDcss_seek = (int (*)(dvdcss_handle, int, int))
+    DVDcss_seek = (int (*)(dvdcss_t, int, int))
       dlsym(dvdcss_library, U_S "dvdcss_seek");
-    DVDcss_read = (int (*)(dvdcss_handle, void*, int, int))
+    DVDcss_read = (int (*)(dvdcss_t, void*, int, int))
       dlsym(dvdcss_library, U_S "dvdcss_read");
-    DVDcss_error = (char* (*)(dvdcss_handle))
+    DVDcss_error = (char* (*)(dvdcss_t))
       dlsym(dvdcss_library, U_S "dvdcss_error");
 
     dvdcss_version = (char **)dlsym(dvdcss_library, U_S "dvdcss_interface_2");
