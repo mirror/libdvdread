@@ -119,7 +119,7 @@ struct dvd_file_s {
   ssize_t filesize;
 };
 
-int UDFReadBlocksRaw( dvd_reader_t *device, uint32_t lb_number,
+int InternalUDFReadBlocksRaw( dvd_reader_t *device, uint32_t lb_number,
                       size_t block_count, unsigned char *data,
                       int encrypted );
 
@@ -1121,7 +1121,7 @@ int DVDFileStat( dvd_reader_t *dvd, int titlenum,
 }
 
 /* Internal, but used from dvd_udf.c */
-int UDFReadBlocksRaw( dvd_reader_t *device, uint32_t lb_number,
+int InternalUDFReadBlocksRaw( dvd_reader_t *device, uint32_t lb_number,
                       size_t block_count, unsigned char *data,
                       int encrypted )
 {
@@ -1153,7 +1153,7 @@ static int DVDReadBlocksUDF( dvd_file_t *dvd_file, uint32_t offset,
                              size_t block_count, unsigned char *data,
                              int encrypted )
 {
-  return UDFReadBlocksRaw( dvd_file->dvd, dvd_file->lb_start + offset,
+  return InternalUDFReadBlocksRaw( dvd_file->dvd, dvd_file->lb_start + offset,
                            block_count, data, encrypted );
 }
 
@@ -1429,7 +1429,7 @@ int DVDISOVolumeInfo( dvd_reader_t *dvd,
     return -1;
   }
 
-  ret = UDFReadBlocksRaw( dvd, 16, 1, buffer, 0 );
+  ret = InternalUDFReadBlocksRaw( dvd, 16, 1, buffer, 0 );
   if( ret != 1 ) {
     fprintf( stderr, "libdvdread: DVDISOVolumeInfo, failed to "
              "read ISO9660 Primary Volume Descriptor!\n" );
