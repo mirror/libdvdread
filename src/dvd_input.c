@@ -274,13 +274,10 @@ static int file_close(dvd_input_t dev)
 int dvdinput_setup(void)
 {
   void *dvdcss_library = NULL;
-  char **dvdcss_version = NULL;
 
 #ifdef HAVE_DVDCSS_DVDCSS_H
   /* linking to libdvdcss */
   dvdcss_library = &dvdcss_library;  /* Give it some value != NULL */
-  /* the DVDcss_* functions have been #defined at the top */
-  dvdcss_version = &dvdcss_interface_2;
 
 #else
   /* dlopening libdvdcss */
@@ -315,8 +312,6 @@ int dvdinput_setup(void)
     DVDcss_error = (char* (*)(dvdcss_t))
       dlsym(dvdcss_library, U_S "dvdcss_error");
 
-    dvdcss_version = (char **)dlsym(dvdcss_library, U_S "dvdcss_interface_2");
-
     if(dlsym(dvdcss_library, U_S "dvdcss_crack")) {
       fprintf(stderr,
               "libdvdread: Old (pre-0.0.2) version of libdvdcss found.\n"
@@ -325,7 +320,7 @@ int dvdinput_setup(void)
       dlclose(dvdcss_library);
       dvdcss_library = NULL;
     } else if(!DVDcss_open  || !DVDcss_close || !DVDcss_title || !DVDcss_seek
-              || !DVDcss_read || !DVDcss_error || !dvdcss_version) {
+              || !DVDcss_read || !DVDcss_error) {
       fprintf(stderr,  "libdvdread: Missing symbols in %s, "
               "this shouldn't happen !\n", CSS_LIB);
       dlclose(dvdcss_library);
@@ -340,8 +335,6 @@ int dvdinput_setup(void)
     fprintf(stderr, "DVDCSS_METHOD %s\n", psz_method);
     fprintf(stderr, "DVDCSS_VERBOSE %s\n", psz_verbose);
     */
-    fprintf(stderr, "libdvdread: Using libdvdcss version %s for DVD access\n",
-            dvdcss_version ? *dvdcss_version : "");
 
     /* libdvdcss wrapper functions */
     dvdinput_open  = css_open;
